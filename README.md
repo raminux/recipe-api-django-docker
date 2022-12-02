@@ -64,7 +64,7 @@
         - Port mappings
         - Volum mappings
 - Run all commands using Docker Compose
-    - such as: docker-compose run --rm app sh -c  "python manage.py collectstatic"
+    - such as: docker compose run --rm app sh -c  "python manage.py collectstatic"
 
 ## How to build Docker image
 After creating a Dockerfile, requirements.txt, .gitignore, and .dockerignore files and app directory, it is time to use docker command to build the image:
@@ -73,7 +73,7 @@ $> docker build .
 ```
 Now, creaete a docker-compose.yml file, then run the following command:
 ```bash
-$ docker compose up -d
+$ docker compose build
 ```
 
 ## What is Linting?
@@ -85,6 +85,29 @@ To handle linting, we use the following steps:
 - Install **flake8** package
 - run it through Docker Compose
     - docker compose run --rm app sh -c "flake8"
+- How to configure?
+    - create a requirements.dev.txt file.
+    - add flake8>=3.9.2,< 3.10 to it
+    - add args: - DEV=true to docker-compose.yml file
+    - add the following lines to the Dockerfile:
+        - COPY ./requirements.dev.txt /tmp/requirements.dev.txt
+        - ARG DEV=false
+        - if [ $DEV = "true" ]; \
+        then /py/bin/pip install -r /tmp/requirements.dev.txt ;\
+        fi && \
+    - run the following command to rebuild the development server
+        ```bash 
+        $ docker compose build
+        ```
+    - add .flake8 file inside the app directory with the following content to exclude from linting:
+        - [flake8]
+            exclude = 
+                migrations,
+                __pychache__,
+                manage.py,
+                settings.py,
+    - to run the linting tool, use the following command
+        - docker compose run --rm app sh -c "flake8"
 
 ## For Testing
 
@@ -93,3 +116,12 @@ To handle linting, we use the following steps:
 - Run test through Docker Compose
     - docker compose run --rm app sh -c "python manage.py test"
 
+## How createe Django project
+Just hit the following command
+```bash
+$ docker compose run --rm app sh -c "django-admin startproject configs ."
+```
+To run the Django server, just wake up the container
+```bash
+$ docker compose up
+```
