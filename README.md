@@ -168,3 +168,45 @@ $ docker compose up
         - DOCKERHUB_USER
         - Secrets are encrypted
         - Decrypted when needed in actions
+
+## Test Driven Development  (TDD) in Django
+
+Django has its own way to TDD which is called Django test framework.
+Keep in mind that in TDD, you first write tests and then add functionalities to pass those tests.
+
+- based on the `unittest` library
+- Django adds features
+    - Test client - dummy web browser
+    - Simulate authentication
+    - Temporary database
+- Django REST Framework adds features
+    API test client
+- Where do you put tests?
+    - Placeholder tests added to each project
+    - Or, create `tests/` subdirectory to split tests up
+        - Keep in mind:
+            - Only use `tests.py` or `tests/` directory (not both)
+            - Test modules must start with `test_` when using `tests/` directory
+            - Test directories must contain `__init__.py`
+- Test Database
+    - Test code that uses the DB
+    - Specific databases for tests
+    - Happens for every test (by default)
+- Test Classes
+    - SimpleTestCase
+        - No database integration
+        - Useful if no database is required for your test
+        - Save time executing tests
+    - TestCase
+        - Database integration
+        - Useful for testing code that uses the database
+- Writing tests
+    - Import test class
+        - SimpleTestCase
+        - TestCase
+    - Import objects to test
+    - Define test class
+    - Add test method
+        - Setup test inputs
+        - Execute code to be tested
+        - Check output using assert
