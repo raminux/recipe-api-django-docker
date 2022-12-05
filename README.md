@@ -125,3 +125,46 @@ To run the Django server, just wake up the container
 ```bash
 $ docker compose up
 ```
+
+## GitHub Actions
+
+- An automation tool
+- Similar to Travis CI, GitLab CI/CD, Jenkins
+- Run jobs when code changes
+- Common uses
+    - Deployment
+    - Code linting
+    - Unit tests
+- How it works
+    1. Trigger (Push to Github)
+    2. Job (Run unit tests)
+    3. Result (Success/Fail)
+- Pricing
+    - Charged per minutes
+    - 2000 free minutes
+    - Various plans available
+
+## How we'll configure GitHub actions
+
+- Create a config gile at .github/workflows/checks.yml
+    - Set trigger
+    - Add steps for running testing and linting
+- Configure Docker Hub auth
+    - Needed to pull base images
+    - Has rate limits
+        - anonymous users: 100 pulls / 6h
+        - authenticated users: 200 pulls / 6h
+    - GitHub actions uses shared IP addresses
+        - limit applied to all users
+    - So Authenticate with Docker Hub to have 200 pull
+        - 200 pulls per 6h all to ourselves!
+        - More than enough for most projects
+    - Additional plans available
+- How to authenticate with Docker Hub?
+    - register account on https://hub.docker.com/
+    - Use `docker login` dduring our job
+    - Add secrets to GitHub project
+        - DOCKERHUB_TOKEN
+        - DOCKERHUB_USER
+        - Secrets are encrypted
+        - Decrypted when needed in actions
