@@ -180,7 +180,7 @@ Keep in mind that in TDD, you first write tests and then add functionalities to 
     - Simulate authentication
     - Temporary database
 - Django REST Framework adds features
-    API test client
+    - API test client
 - Where do you put tests?
     - Placeholder tests added to each project
     - Or, create `tests/` subdirectory to split tests up
@@ -210,3 +210,65 @@ Keep in mind that in TDD, you first write tests and then add functionalities to 
         - Setup test inputs
         - Execute code to be tested
         - Check output using assert
+
+## Database Architecture Overview
+
+- Database
+    - PostgreSQL
+        - Popular open source DB
+        - Integrates well with Django
+    - Docker Compose Configs
+        - Defined with project (re-usable)
+        - Persistent data using volumes
+        - Handles network configuration
+        - Environment variable configuration
+- Architecture
+    - Docker Compose Services
+        - PostgreSQL
+        - Django 
+- Network Connectivity
+    - is handled automatically by Docker by adding:
+        - depends_on configs
+    - Docker Compose creates a network between services
+    - The `app` service can use `db` hostname 
+- Volumes
+    - is a way to store persistent data using Docker
+    - Maps directory in container to local machine
+
+### Configuring database with Django
+
+- Configure Django
+    - Tell Djnago how to connect to the database
+    - Django needs to know
+        - Engine (type of database)
+        - Hostname (IP or domain name for database)
+        - Port
+        - Database name
+        - Username
+        - Password
+- Environment variables 
+    - Pulling config values from environment variables
+    - Easily passed to Docker
+    - Used in local dev or production
+    - Single place to configure project
+    - Easy to do with Python
+- Install database adaptor dependencies
+    - Install the tool that Django uses to connect
+    - Psycopg2
+        - The package that we need in order for Django to connect to the database
+        - Most popular PostgreSQL adaptor for Python
+        - Supported by Django Officially
+        - Requires additional dependencies
+            - C compiler
+            - python3-dev
+            - libpq-dev
+        - Equivalent requirements in Alpine image
+            - postgresql-client
+            - build-base
+            - postgresql-dev
+            - musl-dev
+        - Easy to install with Docker
+- Docker best practice
+    - clean up build dependencies 
+
+
