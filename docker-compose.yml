@@ -11,7 +11,9 @@ services:
     volumes:
       - ./app:/app
     command: >
-      sh -c "python manage.py runserver 0.0.0.0:8000"
+      sh -c "python manage.py wait_for_db &&
+             python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
     environment:
       - DB_HOST=db
       - DB_NAME=devdb
@@ -19,12 +21,20 @@ services:
       - DB_PASS=changeme
     depends_on:
       - db
+    links: 
+      - db:db
+    networks:
+      - mynetwork
   
   db:
     image: postgres:13-alpine
+    # user: ramin
     volumes:
       - dev-db-data:/var/lib/postgresql/data
+    networks:
+      - mynetwork
     environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
       - POSTGRES_DB=devdb
       - POSTGRES_USER=devuser
       - POSTGRES_PASSWORD=changeme
@@ -32,3 +42,7 @@ services:
 
 volumes:
   dev-db-data:
+
+networks:
+  mynetwork:
+    driver: bridge
