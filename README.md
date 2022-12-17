@@ -96,12 +96,12 @@ To handle linting, we use the following steps:
         then /py/bin/pip install -r /tmp/requirements.dev.txt ;\
         fi && \
     - run the following command to rebuild the development server
-        ```bash 
+        ```bash
         $ docker compose build
         ```
     - add .flake8 file inside the app directory with the following content to exclude from linting:
         - [flake8]
-            exclude = 
+            exclude =
                 migrations,
                 __pychache__,
                 manage.py,
@@ -225,12 +225,12 @@ Keep in mind that in TDD, you first write tests and then add functionalities to 
 - Architecture
     - Docker Compose Services
         - PostgreSQL
-        - Django 
+        - Django
 - Network Connectivity
     - is handled automatically by Docker by adding:
         - depends_on configs
     - Docker Compose creates a network between services
-    - The `app` service can use `db` hostname 
+    - The `app` service can use `db` hostname
 - Volumes
     - is a way to store persistent data using Docker
     - Maps directory in container to local machine
@@ -246,7 +246,7 @@ Keep in mind that in TDD, you first write tests and then add functionalities to 
         - Database name
         - Username
         - Password
-- Environment variables 
+- Environment variables
     - Pulling config values from environment variables
     - Easily passed to Docker
     - Used in local dev or production
@@ -269,6 +269,69 @@ Keep in mind that in TDD, you first write tests and then add functionalities to 
             - musl-dev
         - Easy to install with Docker
 - Docker best practice
-    - clean up build dependencies 
+    - clean up build dependencies
+
+## Django Authentication
+
+- Built in authentication system
+- Framework for basic features
+    - Registration
+    - Login
+    - Auth
+- Integrates with Django Admin
+- Django User Model
+    - Foundation of the Django Authentication system
+    - Default user model
+        - Username instead of email
+        - Not easy to customize
+    - Create a custom model for new projects
+        - Allows for using email instead of username
+        - Future proof project for later changes to user model
+### How to customize user model
+- Create model
+    - Base from AbstractBaseUser and PermissionsMixin
+- Create custom manager
+    - Used mostly for CLI integration
+- Set AUTH_USER_MODEL in settings.py
+- Create and run migrations
+
+#### AbstractBaseUser
+- Provides features for authentication
+- Doesn't include fields
+#### PermissionsMixin
+- Support for Django permission system
+- Includes fields and methods
+
+#### Common issues customizing Django user model
+- Running migrations before setting custom model
+    - Set custom model first
+- Typos in config
+- Indentation in manager or model
+
+#### User fields
+- email (EmailField)
+- name (CharField)
+- is_active (BooleanField)
+- is_staff (BooleanField)
+#### User model manager
+- used to manage user objects
+- Customize logic for creating objects
+    - Hash password
+- Used by Django CLI
+    - Create superuser
+#### BaseUserManager
+- Base class for managing users
+- Useful helper methods
+    - normalize_email: for storing emails consistently
+- Methods we will define
+    - create_user: called when creating user
+    - create_superuser: used by the CLI to create a superuser
+
+## What is the Django Admin?
+
+- Graphical user interface for models
+    - create, read, update, delete (CRUD) objects in database
+- Very little coding required
+
 
 
