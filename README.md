@@ -333,5 +333,53 @@ Keep in mind that in TDD, you first write tests and then add functionalities to 
     - create, read, update, delete (CRUD) objects in database
 - Very little coding required
 
+## Importance of API Documentation
+
+- Why document?
+    - APIs are designed for developers to use
+    - Need to know how to use it
+    - An API is only as good as its documentation
+- What to ducument?
+    - Everything needed to use the API such as
+        - Available endpoints (paths)
+            - /api/recipes
+        - Supported methods
+            - GET, POST, PUT, PATCH, DELETE,
+        - Format of payloads (inputs) to api
+            - Parameters
+            - Post JSON format
+        - Format of responses (outputs) of the API
+            - Response JSON format
+        - Authentication process
+- Options for documentation
+    - Manual
+        - Word doc
+        - Markdown
+    - Automated
+        - Use metadata from code (comments)
+        - Generate documentation pages
+### Docs in Django Rest Framework (DRF)
+
+- Auto generate docs (with third party library)
+    - drf-spectacular library
+- This library generrates schema i.e. a document in format of JSON or YAML format.
+- The schema allows us to create a browsable web interface
+    - make test requests
+    - handle auth
+- How it works?
+    - generate 'schema' file
+    - parse schema into GUI
+- OpenAPI Schema
+    - Standard for describing APIs
+    - Popular in industry
+    - Supported by most API documentation tools
+    - Uses popular formats: YAML/JSON
+- Using a schema
+    - download and run in local Swagger instance
+    - Serve Swagger with API
+
+
+
+
 
 
