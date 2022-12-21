@@ -378,6 +378,46 @@ Keep in mind that in TDD, you first write tests and then add functionalities to 
     - download and run in local Swagger instance
     - Serve Swagger with API
 
+## User API
+
+- User registration
+- Creating auth token
+- Viewing/updating profile
+- Endpoints
+    - user/create
+        - POST - Register a new user
+    - user/token
+        - POST - Create new token
+    - user/me
+        - PUT/PATCH - Update profile
+        - GET - View profile
+- Types of authentication
+    - Basic
+        - Send username and password with each request
+        - This is a bad way of authenticating because for every request to the server, it is required to send the username and password.
+    - Token
+        - Pros
+            - Use a token in the HTTP header
+            - Used in this web application
+            - Balance of simplicity and security
+            - supporetd out of the box by DRF
+            - Well support by most clients
+            - Avoid sending username/password each time
+        - Cons
+            - Token needs to be secure
+            - Requires database requests (so not suitable for platform like social networks)
+        - Logging out
+            - Happens on the client side
+            - Delete token
+        - Why no logout API?
+            - Unreliable
+                - No guarantee it will be called (for example when you delete the mobile app, the logout api will not be called, or when the web session is closed, the logout api will not be called)
+            - so not useful on API
+    - JSON Web Token (JWT)
+        - Use and access and refresh token
+        - for option for scalable websites
+    - Session
+        - Use cookies
 
 
 
