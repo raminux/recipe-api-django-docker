@@ -419,7 +419,39 @@ Keep in mind that in TDD, you first write tests and then add functionalities to 
     - Session
         - Use cookies
 
+## Recipe APIs
 
+- Endpoints
+    - /recipes/
+        - GET - List all recipes
+        - POST - Create a recipe
+    - /recipes/<recipe_id>/
+        - GET - View details of a recipe
+        - PUT/PATCH - Update a recipe
+        - DELETE - Delete a recipe
 
+## APIView vs Viewsets
 
+- What is a view?
+    - handles a request made to a URL
+    - Django uses functions and classes to create views
+    - DRF mostly uses classes
+        - Reusable logic
+        - Override behavior
+    - DRF also supports decorators
+    - APIView and Viewsets are DRF's base classes
+- APIView
+    - Focued around HTTP methods
+    - Class methods for HTTP methods
+        - GET, POST, PUT, PATCH, DELETE
+    - Provide flexibility over URLs and logic
+    - Useful for non CRUD APIs
+        - Avoid for simple Create, Read, Update, Delete APIs
+        - Best suited for auth, jobs, external apis
 
+- Viewsets
+    - Focused around actions
+        - Retrieve, list, update, partial update, destroy
+    - Map to Django models
+    - use Routers to generate URLs
+    - Great for CRUD operations on models
