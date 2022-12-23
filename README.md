@@ -455,3 +455,11 @@ Keep in mind that in TDD, you first write tests and then add functionalities to 
     - Map to Django models
     - use Routers to generate URLs
     - Great for CRUD operations on models
+
+## What are nested serializers?
+
+- Serializer within a serializer
+- Used for fields which are objects
+- Limitations
+    - Read only by default in DRF
+    - Custom logic to make it writable
